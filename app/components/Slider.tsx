@@ -1,8 +1,9 @@
 ﻿'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Tag, Image, theme, Button, FloatButton, Drawer, Table } from 'antd';
 import { motion } from 'framer-motion';
+import * as XLSX from 'xlsx';
 
 export const SliderPage: React.FC<{
   list: any[];
@@ -255,6 +256,24 @@ export const SliderPage: React.FC<{
         open={successListOpen}
         width={'60vw'}
       >
+        <Button
+          type="primary"
+          style={{
+            margin: '12px 0',
+          }}
+          onClick={() => {
+            var ws = XLSX.utils.json_to_sheet(successList);
+
+            /* add to workbook */
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, '选中的数据');
+
+            /* generate an XLSX file */
+            XLSX.writeFile(wb, 'sheetjs.xlsx');
+          }}
+        >
+          导出为 excel
+        </Button>
         <Table
           scroll={{
             x: 2000,
@@ -272,6 +291,24 @@ export const SliderPage: React.FC<{
         open={unusedListOpen}
         width={'60vw'}
       >
+        <Button
+          type="primary"
+          style={{
+            margin: '12px 0',
+          }}
+          onClick={() => {
+            var ws = XLSX.utils.json_to_sheet(unusedList);
+
+            /* add to workbook */
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, '为选中数据');
+
+            /* generate an XLSX file */
+            XLSX.writeFile(wb, 'sheetjs.xlsx');
+          }}
+        >
+          导出为 excel
+        </Button>
         <Table
           scroll={{
             x: 2000,

@@ -1,6 +1,5 @@
 'use client';
 import {
-  FloatButton,
   Upload,
   App,
   ConfigProvider,
@@ -22,7 +21,6 @@ export default function Home() {
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [primaryKey, setPrimaryKey] = useState<string>('');
 
-  const [open, setOpen] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [view, setView] = useState<'upload' | 'keySelect' | 'slider'>('upload');
   function handleFile(file: File) {
@@ -37,7 +35,9 @@ export default function Home() {
             workbook.Sheets[workbook.SheetNames[0]]
           );
           setDataSource(fileData as unknown as any[]);
-          setSelectedKeys(Object.keys(fileData?.at(0) as any) as string[]);
+          const keys = Object.keys(fileData?.at(0) as any) as string[];
+          setSelectedKeys(keys);
+          setPrimaryKey(keys.find((key) => key.includes('id')) || keys[0]);
           resolve(true);
           /* DO SOMETHING WITH workbook HERE */
         };
@@ -94,7 +94,7 @@ export default function Home() {
                 }}
               >
                 <img
-                  width={80}
+                  width={120}
                   alt="miu 姐"
                   src="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*88xbQaYvP4YAAAAAAAAAAAAADml6AQ/original"
                 />
@@ -144,10 +144,9 @@ export default function Home() {
                         key,
                       };
                     })}
+                    checkedKeys={selectedKeys}
                     checkable
-                    selectedKeys={selectedKeys}
                     onCheck={(keys) => {
-                      console.log(keys);
                       setSelectedKeys(keys as string[]);
                     }}
                   />
