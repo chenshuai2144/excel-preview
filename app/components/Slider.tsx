@@ -1,7 +1,17 @@
 ﻿'use client';
 
 import { useMemo, useState } from 'react';
-import { Tag, Image, theme, Button, FloatButton, Drawer, Table } from 'antd';
+import {
+  Tag,
+  Image,
+  theme,
+  Button,
+  FloatButton,
+  Drawer,
+  Table,
+  Result,
+  Space,
+} from 'antd';
 import { motion } from 'framer-motion';
 import * as XLSX from 'xlsx';
 
@@ -9,6 +19,7 @@ export const SliderPage: React.FC<{
   list: any[];
   rowKey: string;
   selectedKeys: string[];
+  onBack: () => void;
 }> = (props) => {
   console.log(props.selectedKeys);
   const [current, setCurrent] = useState(0);
@@ -128,104 +139,147 @@ export const SliderPage: React.FC<{
   const item = props.list.at(current);
   return (
     <div>
-      <div
-        key={item[props.rowKey]}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100vw',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+      {props.list.length === current ? (
+        <Result
+          icon={
+            <img
+              width={400}
+              alt="没有更多啦"
+              src="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*xAMjRZ4-qYAAAAAAAAAAAAAADml6AQ/original"
+            />
+          }
+          subTitle="没有更多啦"
+          extra={
+            <Space>
+              <Button
+                onClick={() => {
+                  props.onBack;
+                }}
+              >
+                返回主页
+              </Button>
+              <Button
+                type="primary"
+                onClick={() => {
+                  var ws = XLSX.utils.json_to_sheet(successList);
+
+                  /* add to workbook */
+                  var wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, ws, '选中的数据');
+                  ws = XLSX.utils.json_to_sheet(unusedList);
+                  /* add to workbook */
+                  wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, ws, '未选中的数据');
+
+                  /* generate an XLSX file */
+                  XLSX.writeFile(wb, 'mium-miaomiao.xlsx');
+                }}
+              >
+                导出数据
+              </Button>
+            </Space>
+          }
+        />
+      ) : (
         <div
+          key={item[props.rowKey]}
           style={{
-            width: '42vw',
-            padding: 24,
             display: 'flex',
-            alignItems: 'center',
-            height: '60vh',
             justifyContent: 'center',
+            width: '100vw',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <motion.div
-            layout
-            id="card"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
+          <div
             style={{
+              width: '42vw',
               padding: 24,
               display: 'flex',
-              borderRadius: 8,
-              gap: 8,
-              transform: 'all 0.3s',
-              flexDirection: 'column',
-              boxShadow: token.boxShadow,
-              border: `1px solid ${token.colorSplit}`,
+              alignItems: 'center',
+              height: '60vh',
+              justifyContent: 'center',
             }}
           >
-            {itemKeys.map((key) => {
-              return render(item[key], key);
-            })}
-          </motion.div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: 40,
-            transition: 'all 1.2s',
-            color: token.colorText,
-            gap: 24,
-          }}
-          onClick={() => {
-            if (current === currentList.length - 1) {
-              setCurrent(0);
-              setPage(page + 1);
-            }
-          }}
-        >
-          <Button
+            <motion.div
+              layout
+              id="card"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+              style={{
+                padding: 24,
+                display: 'flex',
+                borderRadius: 8,
+                gap: 8,
+                transform: 'all 0.3s',
+                flexDirection: 'column',
+                boxShadow: token.boxShadow,
+                border: `1px solid ${token.colorSplit}`,
+              }}
+            >
+              {itemKeys.map((key) => {
+                return render(item[key], key);
+              })}
+            </motion.div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 40,
+              transition: 'all 1.2s',
+              color: token.colorText,
+              gap: 24,
+            }}
             onClick={() => {
-              if (current === 9) {
+              if (current === currentList.length - 1) {
                 setCurrent(0);
                 setPage(page + 1);
               }
-              setCurrent(current + 1);
-              setSuccessList([...successList, item]);
-              setCurrentList(
-                currentList.filter(
-                  (listItem) => listItem[props.rowKey] !== item[props.rowKey]
-                )
-              );
             }}
           >
-            ❤️
-          </Button>
-          <Button
-            onClick={() => {
-              if (current === 9) {
-                setCurrent(0);
-                setPage(page + 1);
-              }
-              setCurrent(current + 1);
-              setUnusedList([...unusedList, item]);
-              setCurrentList(
-                currentList.filter(
-                  (listItem) => listItem[props.rowKey] !== item[props.rowKey]
-                )
-              );
-            }}
-          >
-            🌶️
-          </Button>
+            <Button
+              onClick={() => {
+                if (current === 9) {
+                  setCurrent(0);
+                  setPage(page + 1);
+                }
+                setCurrent(current + 1);
+                setSuccessList([...successList, item]);
+                setCurrentList(
+                  currentList.filter(
+                    (listItem) => listItem[props.rowKey] !== item[props.rowKey]
+                  )
+                );
+              }}
+            >
+              ❤️
+            </Button>
+            <Button
+              onClick={() => {
+                if (current === 9) {
+                  setCurrent(0);
+                  setPage(page + 1);
+                }
+                setCurrent(current + 1);
+                setUnusedList([...unusedList, item]);
+                setCurrentList(
+                  currentList.filter(
+                    (listItem) => listItem[props.rowKey] !== item[props.rowKey]
+                  )
+                );
+              }}
+            >
+              🌶️
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       <FloatButton
         style={{

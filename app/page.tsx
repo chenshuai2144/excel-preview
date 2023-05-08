@@ -180,6 +180,9 @@ export default function Home() {
               list={dataSource}
               rowKey={primaryKey}
               selectedKeys={selectedKeys}
+              onBack={() => {
+                setView('upload');
+              }}
             />
           )}
         </>
