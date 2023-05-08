@@ -21,7 +21,6 @@ export const SliderPage: React.FC<{
   selectedKeys: string[];
   onBack: () => void;
 }> = (props) => {
-  console.log(props.selectedKeys);
   const [current, setCurrent] = useState(0);
   const [page, setPage] = useState(0);
   const [unusedList, setUnusedList] = useState<any[]>([]);
