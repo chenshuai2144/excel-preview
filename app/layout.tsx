@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import StyledComponentsRegistry from './style/registry';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,7 +33,7 @@ export default function RootLayout({
           padding: 24,
         }}
       >
-        {children}
+        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
   );
