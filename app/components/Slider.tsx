@@ -152,7 +152,7 @@ export const SliderPage: React.FC<{
             <Space>
               <Button
                 onClick={() => {
-                  props.onBack;
+                  props.onBack();
                 }}
               >
                 返回主页
@@ -185,7 +185,6 @@ export const SliderPage: React.FC<{
           style={{
             display: 'flex',
             justifyContent: 'center',
-            width: '100vw',
             flexDirection: 'column',
             alignItems: 'center',
           }}
@@ -196,7 +195,7 @@ export const SliderPage: React.FC<{
               padding: 24,
               display: 'flex',
               alignItems: 'center',
-              height: '60vh',
+              minHeight: '60vh',
               justifyContent: 'center',
             }}
           >
@@ -216,8 +215,9 @@ export const SliderPage: React.FC<{
                 borderRadius: 8,
                 gap: 8,
                 transform: 'all 0.3s',
+                backgroundColor: 'rgb(30 41 59/1)',
                 flexDirection: 'column',
-                boxShadow: token.boxShadow,
+                boxShadow: 'inset 0 1px 0 0 #ffffff0d',
                 border: `1px solid ${token.colorSplit}`,
               }}
             >
@@ -342,7 +342,6 @@ export const SliderPage: React.FC<{
         }}
         placement="right"
         open={unusedListOpen}
-        width={'60vw'}
       >
         <Button
           type="primary"
