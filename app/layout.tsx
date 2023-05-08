@@ -1,13 +1,21 @@
-import Head from 'next/head';
+import { Metadata } from 'next';
+
 import './globals.css';
 import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from './style/registry';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'miu 姐帮你看',
   description: '早点下班，开罐罐',
+  openGraph: {
+    title: 'miu 姐帮你看',
+    description: '早点下班，开罐罐',
+    type: 'article',
+    images:
+      'https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*88xbQaYvP4YAAAAAAAAAAAAADml6AQ/original',
+  },
 };
 
 export default function RootLayout({
@@ -17,20 +25,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <meta property="og:title" content="miu 姐帮你看" key="title" />
-        <meta
-          property="og:image"
-          content="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*88xbQaYvP4YAAAAAAAAAAAAADml6AQ/original"
-          key="image"
-        />
-        <meta property="og:description" content="看完下班开罐罐" />
-        <meta property="og:type" content="article" />
-      </Head>
       <body
         className={inter.className}
         style={{
           padding: 24,
+          color: 'rgb(255, 255, 255)',
+          background: `linear-gradient(to bottom, transparent, rgb(0, 0, 0) ) rgb(6, 6, 6)`,
         }}
       >
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>

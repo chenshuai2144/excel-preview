@@ -5,16 +5,11 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: rgb(255, 255, 255);
+  background: linear-gradient(to bottom, transparent, rgb(0, 0, 0)) rgb(6, 6, 6);
   background-size: 100% 100vh;
   background-repeat: no-repeat;
-  background-image: url('https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*erd4QL9Ccs0AAAAAAAAAAAAADml6AQ/original');
+  background-image: url('https://tailwindcss.com/_next/static/media/7-dark@tinypng.22f91747.png');
 }
 
 * {

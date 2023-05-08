@@ -11,9 +11,9 @@ export default function StyledComponentsRegistry({
   children: React.ReactNode;
 }) {
   useServerInsertedHTML(() => {
-    const styleText = extractStyle(cache);
+    const styleText = extractStyle(cache, true);
     return (
-      <div
+      <style
         dangerouslySetInnerHTML={{
           __html: styleText,
         }}
