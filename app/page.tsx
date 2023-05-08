@@ -58,50 +58,61 @@ export default function Home() {
       >
         <>
           {view === 'upload' && (
-            <Upload.Dragger
+            <div
               style={{
-                width: 600,
-                margin: '32px auto',
-              }}
-              fileList={[]}
-              onChange={async (e) => {
-                if (
-                  e.file.originFileObj?.name?.endsWith('.csv') ||
-                  e.file.originFileObj?.name?.endsWith('.xls') ||
-                  e.file.originFileObj?.name?.endsWith('.xlsx')
-                ) {
-                  const hideLoading =
-                    message.loading('🐱 miu 姐正在帮你看，稍等哦');
-                  await handleFile(e.file.originFileObj);
-                  hideLoading();
-                  setView('keySelect');
-                  return;
-                }
-                message.error(
-                  '🐱 miu 姐会不高兴的，请上传 .csv .xls .xlsx 格式文件'
-                );
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '60vh',
               }}
             >
-              <div
+              <Upload.Dragger
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
                   width: 600,
-                  margin: 'auto',
-                  justifyItems: 'center',
-                  alignItems: 'center',
+                  margin: '32px auto',
+                  padding: 64,
+                }}
+                fileList={[]}
+                onChange={async (e) => {
+                  if (
+                    e.file.originFileObj?.name?.endsWith('.csv') ||
+                    e.file.originFileObj?.name?.endsWith('.xls') ||
+                    e.file.originFileObj?.name?.endsWith('.xlsx')
+                  ) {
+                    const hideLoading =
+                      message.loading('🐱 miu 姐正在帮你看，稍等哦');
+                    await handleFile(e.file.originFileObj);
+                    hideLoading();
+                    setView('keySelect');
+                    return;
+                  }
+                  message.error(
+                    '🐱 miu 姐不高兴啦，请上传 .csv .xls .xlsx 格式文件'
+                  );
                 }}
               >
-                <img
-                  width={120}
-                  alt="miu 姐"
-                  src="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*88xbQaYvP4YAAAAAAAAAAAAADml6AQ/original"
-                />
-                <p>点击或者拖动让 miu 姐帮你看看</p>
-                <p>支持 .xls .xlsx .csv 格式</p>
-              </div>
-            </Upload.Dragger>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8,
+                    margin: 'auto',
+                    justifyItems: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    <img
+                      width={120}
+                      alt="miu 姐"
+                      src="https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*88xbQaYvP4YAAAAAAAAAAAAADml6AQ/original"
+                    />
+                    <p>点击或者拖动让 miu 姐帮你看看文件，看完下班开罐罐</p>
+                    <p>支持 .xls .xlsx .csv 格式</p>
+                  </div>
+                </div>
+              </Upload.Dragger>
+            </div>
           )}
           {view === 'keySelect' && (
             <Modal
